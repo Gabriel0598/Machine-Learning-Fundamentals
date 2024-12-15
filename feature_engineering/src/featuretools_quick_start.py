@@ -1,20 +1,20 @@
 import featuretools as ft
+import pandas as pd
 
 # load data
 data = ft.demo.load_mock_customer()
 
 # datasets
 customers_df = data["customers"]
-customers_df.sample(5)
-
 sessions_df = data["sessions"]
-sessions_df.sample(5)
-
 transactions_df = data["transactions"]
-transactions_df.sample(5)
+
+# Explicitly parse datetime columns
+sessions_df["session_start"] = pd.to_datetime(sessions_df["session_start"], format="%Y-%m-%d %H:%M:%S", errors="coerce")
+transactions_df["transaction_time"] = pd.to_datetime(transactions_df["transaction_time"], format="%Y-%m-%d %H:%M:%S", errors="coerce")
 
 dataframes = {
-    "customers": (customers_df, "customers_id"),
+    "customers": (customers_df, "customer_id"),
     "sessions": (sessions_df, "session_id", "session_start"),
     "transactions": (transactions_df, "transaction_id", "transaction_time")
 }
@@ -29,4 +29,5 @@ feature_matrix_customers, features_defs = ft.dfs(
     relationships=relationship,
     target_dataframe_name="customers"
 )
+
 print(feature_matrix_customers)
