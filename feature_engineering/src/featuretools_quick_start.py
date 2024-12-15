@@ -19,15 +19,27 @@ dataframes = {
     "transactions": (transactions_df, "transaction_id", "transaction_time")
 }
 
-relationship = [
+relationships = [
     ("sessions", "session_id", "transactions", "session_id"),
     ("customers", "customer_id", "sessions", "customer_id")
 ]
 
 feature_matrix_customers, features_defs = ft.dfs(
     dataframes=dataframes,
-    relationships=relationship,
+    relationships=relationships,
     target_dataframe_name="customers"
 )
 
 print(feature_matrix_customers)
+
+feature_matrix_sessions, features_defs = ft.dfs(
+    dataframes=dataframes, relationships=relationships, target_dataframe_name="sessions"
+)
+
+feature_matrix_sessions.head(5)
+
+feature = features_defs[18]
+print(feature)
+
+ft.graph_feature(feature)
+ft.describe_feature(feature)
