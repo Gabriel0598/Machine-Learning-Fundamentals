@@ -38,10 +38,10 @@ feature_matrix_sessions, features_defs = ft.dfs(
 
 print(feature_matrix_sessions.head())
 
-if len(features_defs) <= 43:
-    feature = features_defs[43]
-    print(feature)
-    ft.graph_feature(feature)
-    ft.describe_feature(feature)
+if len(features_defs) > 42:
+    feature = features_defs[42]
+    print(f"Feature 42: {feature}")
+    # ft.graph_feature(feature)
+    print(ft.describe_feature(feature))
 else:
     print("Feature index out of range")
