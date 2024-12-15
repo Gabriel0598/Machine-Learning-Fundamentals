@@ -30,16 +30,18 @@ feature_matrix_customers, features_defs = ft.dfs(
     target_dataframe_name="customers"
 )
 
-print(feature_matrix_customers)
+print(feature_matrix_customers.head())
 
 feature_matrix_sessions, features_defs = ft.dfs(
     dataframes=dataframes, relationships=relationships, target_dataframe_name="sessions"
 )
 
-feature_matrix_sessions.head(5)
+print(feature_matrix_sessions.head())
 
-feature = features_defs[18]
-print(feature)
-
-ft.graph_feature(feature)
-ft.describe_feature(feature)
+if len(features_defs) <= 43:
+    feature = features_defs[43]
+    print(feature)
+    ft.graph_feature(feature)
+    ft.describe_feature(feature)
+else:
+    print("Feature index out of range")
